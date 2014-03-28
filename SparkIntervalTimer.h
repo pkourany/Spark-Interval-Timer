@@ -79,6 +79,16 @@ class IntervalTimer {
     bool begin(void (*isrCallback)(), long newPeriod, bool scale) {
 		return begin(isrCallback, (int)newPeriod, scale);
     }
+
+    bool begin(unsigned int newPeriod, bool scale) {        //Set different time for timer that's already allocated
+		if (newPeriod == 0 || newPeriod > MAX_PERIOD)
+			return false;
+			
+	    if (status == TIMER_SIT) {
+		    stop_SIT();
+		    start_SIT(newPeriod, scale);
+	    }
+    }
 	
     void end();
 	
