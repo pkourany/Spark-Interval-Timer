@@ -31,7 +31,7 @@ void setup(void) {
   Serial.begin(9600);
   
   myTimer.begin(blinkLED, 1000, hmSec);  // blinkLED to run every 500ms (1000 * .5ms period)
-  myTimer2.begin(blinkLED2, 500, hmSec);  // blinkLED to run every 200ms (500 * .5ms period)
+  myTimer2.begin(blinkLED2, 500, hmSec);  // blinkLED to run every 250ms (500 * .5ms period)
   myTimer3.begin(blinkLED3, 2000, hmSec);  // blinkLED to run every 1000ms (2000 * .5ms period)
 
 }
