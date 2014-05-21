@@ -20,7 +20,7 @@ void blinkLED(void);
 void blinkLED2(void);
 void blinkLED3(void);
 
-/
+
 const uint8_t ledPin = D7;		// LED for first Interval Timer
 const uint8_t ledPin2 = D3;		// LED for second Interval Timer
 const uint8_t ledPin3 = D4;		// LED for third Interval Timer
