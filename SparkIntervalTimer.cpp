@@ -32,7 +32,7 @@ IntervalTimer::ISRcallback IntervalTimer::SIT_CALLBACK[];
 // TIM2, TIM3 and TIM4 with callbacks to user code.
 // These default as infinite loop stubs by Spark
 // ------------------------------------------------------------
-extern "C" void TIM2_IRQHandler()
+extern "C" void Wiring_TIM2_Interrupt_Handler_override()
 {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
 	{
@@ -42,7 +42,7 @@ extern "C" void TIM2_IRQHandler()
 	}
 }
 
-extern "C" void TIM3_IRQHandler()
+extern "C" void Wiring_TIM3_Interrupt_Handler_override()
 {
 	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
 	{
@@ -52,7 +52,7 @@ extern "C" void TIM3_IRQHandler()
 	}
 }
 
-extern "C" void TIM4_IRQHandler()
+extern "C" void Wiring_TIM4_Interrupt_Handler_override()
 {
 	if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)
 	{
@@ -233,4 +233,3 @@ void IntervalTimer::stop_SIT() {
 	// free SIT for future use
 	SIT_used[SIT_id] = false;
 }
-

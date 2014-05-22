@@ -25,15 +25,21 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #include "application.h"
 
-extern "C" void TIM2_IRQHandler();
-extern "C" void TIM3_IRQHandler();
-extern "C" void TIM4_IRQHandler();
 
 enum {uSec, hmSec};			// microseconds or half-milliseconds
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+extern void (*Wiring_TIM2_Interrupt_Handler)(void);
+extern void (*Wiring_TIM3_Interrupt_Handler)(void);
+extern void (*Wiring_TIM4_Interrupt_Handler)(void);
+
+extern void Wiring_TIM2_Interrupt_Handler_override(void);
+extern void Wiring_TIM3_Interrupt_Handler_override(void);
+extern void Wiring_TIM4_Interrupt_Handler_override(void);
+
 
 class IntervalTimer {
   private:
@@ -57,7 +63,12 @@ class IntervalTimer {
     bool beginCycles(void (*isrCallback)(), uint16_t cycles, bool scale);
 	
   public:
-    IntervalTimer() { status = TIMER_OFF; }
+    IntervalTimer() { 
+        status = TIMER_OFF; 
+        Wiring_TIM2_Interrupt_Handler = Wiring_TIM2_Interrupt_Handler_override;
+        Wiring_TIM3_Interrupt_Handler = Wiring_TIM3_Interrupt_Handler_override;
+        Wiring_TIM4_Interrupt_Handler = Wiring_TIM4_Interrupt_Handler_override;
+    }
     ~IntervalTimer() { end(); }
 	
     bool begin(void (*isrCallback)(), unsigned int newPeriod, bool scale) {
