@@ -40,6 +40,8 @@ extern void Wiring_TIM2_Interrupt_Handler_override(void);
 extern void Wiring_TIM3_Interrupt_Handler_override(void);
 extern void Wiring_TIM4_Interrupt_Handler_override(void);
 
+enum action {INT_DISABLE, INT_ENABLE};
+
 
 class IntervalTimer {
   private:
@@ -102,6 +104,7 @@ class IntervalTimer {
     }
 	
     void end();
+    void interrupt_SIT(action ACT);
 	
     static ISRcallback SIT_CALLBACK[NUM_SIT];
 };
