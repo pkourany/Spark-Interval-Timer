@@ -233,3 +233,47 @@ void IntervalTimer::stop_SIT() {
 	// free SIT for future use
 	SIT_used[SIT_id] = false;
 }
+
+// ------------------------------------------------------------
+// Enables or disables an active SIT's interrupt without
+// removing the SIT.
+// ------------------------------------------------------------
+void IntervalTimer::interrupt_SIT(action ACT)
+{
+    NVIC_InitTypeDef nvicStructure;
+	TIM_TypeDef* TIMx;
+
+	//use SIT_id to identify TIM#
+	switch (SIT_id) {
+	case 0:		// TIM2
+		nvicStructure.NVIC_IRQChannel = TIM2_IRQn;
+		TIMx = TIM2;
+		break;
+	case 1:		// TIM3
+		nvicStructure.NVIC_IRQChannel = TIM3_IRQn;
+		TIMx = TIM3;
+		break;
+	case 2:		// TIM4
+		nvicStructure.NVIC_IRQChannel = TIM4_IRQn;
+		TIMx = TIM4;
+		break;
+	}
+
+	switch (ACT) {
+	case INT_ENABLE:
+		//Enable Timer Interrupt
+		nvicStructure.NVIC_IRQChannelPreemptionPriority = 0;
+		nvicStructure.NVIC_IRQChannelSubPriority = 1;
+		nvicStructure.NVIC_IRQChannelCmd = ENABLE;
+		NVIC_Init(&nvicStructure);
+		break;
+	case INT_DISABLE:
+		// disable interrupt
+		nvicStructure.NVIC_IRQChannelCmd = DISABLE;
+		NVIC_Init(&nvicStructure);
+		break;
+	default:
+		//Do nothing
+		break;
+	}
+}
